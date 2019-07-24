@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Cliente } from "../../../_entities/cliente";
 import { BsLocaleService } from "ngx-bootstrap";
 import Swal from 'sweetalert2';
+import { ClienteService } from "../../../_services/cliente/cliente.service";
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -17,12 +18,13 @@ export class CadastroClienteComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private bsLocale: BsLocaleService
+    private bsLocale: BsLocaleService,
+    private clienteService: ClienteService
   ) { }
 
   ngOnInit() {
     this.submitted = false;
-    this.cliente = new Cliente();
+    this.cliente = this.clienteService.getCliente();
     this.bsLocale.use("pt-br");
     this.formCliente = this.fb.group({
       nome: [ this.cliente.nome, Validators.required ],

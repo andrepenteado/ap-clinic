@@ -5,8 +5,8 @@ import { PesquisarClienteComponent } from "./_components/cliente/pesquisar/pesqu
 
 
 const routes: Routes = [
-  { path: 'ui/clientes', component: PesquisarClienteComponent },
-  { path: 'ui/clientes/cadastro', component: CadastroClienteComponent }
+  { path: 'clientes/pesquisar', component: PesquisarClienteComponent },
+  { path: 'clientes/cadastro', component: CadastroClienteComponent }
 ];
 
 @NgModule({

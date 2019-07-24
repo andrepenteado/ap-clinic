@@ -1,5 +1,5 @@
 export class Cliente {
-  id: bigint;
+  id: number;
   dataCadastro: Date;
   dataUltimaAtualizacao: Date;
   nome: string;

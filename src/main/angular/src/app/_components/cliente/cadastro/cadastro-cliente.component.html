@@ -29,8 +29,8 @@
           <div class="form-group col-12 col-md-6">
             <label for="txt_data_nascimento" class="control-label">Data de Nascimento</label>
             <div class="input-group">
-              <input type="text" class="form-control" bsDatepicker name="txt_data_nascimento" id="txt_data_nascimento" #dataNascimento="bsDatepicker"
-                     [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="dataNascimento" [ngClass]="{ 'is-invalid': submitted && form.dataNascimento.invalid }">
+              <input type="text" class="form-control" bsDatepicker name="txt_data_nascimento" id="txt_data_nascimento" #dataNascimento="bsDatepicker" value="{{ cliente.dataNascimento | date: 'dd/MM/yyyy' }}"
+                     [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="dataNascimento" [ngClass]="{ 'is-invalid': submitted && form.dataNascimento.invalid }" placeholder="99/99/9999">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary fas fa-calendar" (click)="dataNascimento.toggle()" type="button"></button>
               </div>
@@ -75,9 +75,9 @@
                    placeholder="Profissão" [ngClass]="{ 'is-invalid': form.profissao.invalid }"/>
           </div>
         </div>
-      </div>
-      <div class="form-group col-12 col-md-12" style="text-align: center; margin-top: 25px;">
-        <button type="submit" class="btn btn-primary" [disabled]="submitted && !formCliente.valid"><span class="fas fa-save"></span> Gravar</button>
+        <div class="form-group col-12 col-md-12" style="text-align: center; margin-top: 25px;">
+          <button type="submit" class="btn btn-primary" [disabled]="submitted && !formCliente.valid"><span class="fas fa-save"></span> Gravar</button>
+        </div>
       </div>
     </div>
   </div>
