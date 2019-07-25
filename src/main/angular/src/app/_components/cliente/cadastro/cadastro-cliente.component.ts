@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Cliente } from "../../../_entities/cliente";
 import { BsLocaleService } from "ngx-bootstrap";
-import Swal from 'sweetalert2';
 import { ClienteService } from "../../../_services/cliente/cliente.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -28,8 +28,8 @@ export class CadastroClienteComponent implements OnInit {
     this.bsLocale.use("pt-br");
     this.formCliente = this.fb.group({
       id: [ this.cliente.id ],
-      nome: [ this.cliente.nome ],
-      cpf: [ this.cliente.cpf ],
+      nome: [ this.cliente.nome, Validators.required ],
+      cpf: [ this.cliente.cpf, Validators.required ],
       dataNascimento: [ this.cliente.dataNascimento, Validators.required ],
       profissao: [ this.cliente.profissao ],
       email: [ this.cliente.email, Validators.email ],
@@ -52,8 +52,7 @@ export class CadastroClienteComponent implements OnInit {
         this.formCliente.get("id").setValue(this.cliente.id);
         Swal.fire("Gravar Cliente", `Cliente ${this.cliente.nome} gravado com sucesso!`, 'success');
       }, errorResult => {
-        console.log(errorResult);
-        Swal.fire("Gravar Cliente", `Erro ao gravar cliente ${this.cliente.nome}!<br> ${errorResult.error.message}`, 'error');
+        Swal.fire("Gravar Cliente", `Erro ao gravar cliente ${this.cliente.nome}!<br>${errorResult.error.message}`, 'error');
       });
     }
   }
