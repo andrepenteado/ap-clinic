@@ -7,14 +7,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/clientes")
 @Slf4j
 public class ClienteController {
 
@@ -23,35 +27,58 @@ public class ClienteController {
 
     @GetMapping
     public List<Cliente> pesquisar() {
+        log.info("Pesquisar clientes");
         return clienteRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Cliente buscar(@PathVariable Long id) {
-        /*return repository.findById(id)
-                        .map(record -> ResponseEntity.ok().body(record))
-                        .orElse(ResponseEntity.notFound().build());*/
+        log.info("Buscar cliente #" + id);
         return clienteRepository.findById(id).orElseThrow(() ->
-            new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado. ID: " + id));
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente de ID " + id + " não encontrado"));
     }
 
     @PostMapping
-    public Cliente incluir(@Valid @RequestBody Cliente cliente) {
+    public Cliente incluir(@Valid @RequestBody Cliente cliente, BindingResult result) {
+        log.info("Incluir cliente " + cliente.getNome());
+        // Checar validações
+        if (result.hasErrors())
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_ENTITY,
+                    result.getFieldErrors().stream().map(error ->
+                            StringUtils.capitalize(error.getField()).concat(" ").concat(error.getDefaultMessage()))
+                    .collect(Collectors.joining(". "))
+            );
+        // Checar CPF
+        if (clienteRepository.findByCpf(cliente.getCpf()).filter(c -> c.getCpf().equals(cliente.getCpf())).isPresent())
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cliente com CPF " + cliente.getCpf() + " existente.");
         return clienteRepository.save(cliente);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> editar(@PathVariable Long id, @RequestBody Cliente cliente) {
-        return clienteRepository.findById(id)
-            .map(clienteEntity -> {
-                BeanUtils.copyProperties(clienteEntity, cliente);
-                Cliente clienteAtualizado = clienteRepository.save(clienteEntity);
-                return ResponseEntity.ok().body(clienteAtualizado);
-            }).orElse(ResponseEntity.notFound().build());
+    @PutMapping
+    public Cliente editar(@Valid @RequestBody Cliente cliente, BindingResult result) {
+        log.info("Editar cliente " + cliente.getNome());
+        // Checar se existe
+        Cliente clienteManaged = clienteRepository.findById(cliente.getId()).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente de ID " + cliente.getId() + " não encontrado"));
+        // Checar validações
+        if (result.hasErrors())
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_ENTITY,
+                    result.getFieldErrors().stream().map(error ->
+                            StringUtils.capitalize(error.getField()).concat(" ").concat(error.getDefaultMessage()))
+                    .collect(Collectors.joining(". "))
+            );
+        // Checar CPF
+        if (clienteRepository.findByCpf(cliente.getCpf()).filter(c -> c.getCpf().equals(cliente.getCpf()) && c.getId() != cliente.getId()).isPresent())
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cliente com CPF " + cliente.getCpf() + " existente.");
+        BeanUtils.copyProperties(cliente, clienteManaged);
+        return clienteRepository.save(clienteManaged);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
+        log.info("Excluir cliente #" + id);
         return clienteRepository.findById(id)
             .map(clienteEntity -> {
                 clienteRepository.deleteById(id);

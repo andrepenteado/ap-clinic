@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-floating-button',
   template: `
-    <a routerLink="{{ target }}" class="float-button">
+    <button class="float-button">
       <i class="fas {{ icon }} fa-lg"></i>
-    </a>
+    </button>
   `,
   styles: [`
     .float-button {
@@ -83,21 +83,21 @@ import { Component, Input, OnInit } from '@angular/core';
     @keyframes scale-in {
       from {
         transform: scale(0);
-    opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
     
     @keyframes rotate-in {
       from {
         transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
     
     @keyframes rotate-out {
@@ -114,9 +114,6 @@ export class FloatingButtonComponent implements OnInit {
 
   @Input()
   private icon: string;
-
-  @Input()
-  private target: string;
 
   constructor() { }
 

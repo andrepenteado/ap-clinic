@@ -27,8 +27,9 @@ export class CadastroClienteComponent implements OnInit {
     this.cliente = this.clienteService.getCliente();
     this.bsLocale.use("pt-br");
     this.formCliente = this.fb.group({
-      nome: [ this.cliente.nome, Validators.required ],
-      cpf: [ this.cliente.cpf, Validators.required ],
+      id: [ this.cliente.id ],
+      nome: [ this.cliente.nome ],
+      cpf: [ this.cliente.cpf ],
       dataNascimento: [ this.cliente.dataNascimento, Validators.required ],
       profissao: [ this.cliente.profissao ],
       email: [ this.cliente.email, Validators.email ],
@@ -45,8 +46,15 @@ export class CadastroClienteComponent implements OnInit {
   gravar() {
     this.submitted = true;
     if (this.formCliente.valid) {
-      Swal.fire("Cliente gravado com sucesso!", '', 'success');
-      console.log("Gravado cliente: " + this.formCliente.value);
+      this.cliente = this.formCliente.value;
+      this.clienteService.gravar(this.cliente).subscribe(clienteAtualizado => {
+        this.cliente = clienteAtualizado;
+        this.formCliente.get("id").setValue(this.cliente.id);
+        Swal.fire("Gravar Cliente", `Cliente ${this.cliente.nome} gravado com sucesso!`, 'success');
+      }, errorResult => {
+        console.log(errorResult);
+        Swal.fire("Gravar Cliente", `Erro ao gravar cliente ${this.cliente.nome}!<br> ${errorResult.error.message}`, 'error');
+      });
     }
   }
 }

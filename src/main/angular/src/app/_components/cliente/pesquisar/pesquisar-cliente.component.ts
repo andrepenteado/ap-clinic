@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from "../../../_config/global.service";
 import { Cliente } from "../../../_entities/cliente";
 import { ClienteService } from "../../../_services/cliente/cliente.service";
-import Swal from "sweetalert2";
 import { ActivatedRoute, Router } from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-pesquisar-cliente',
@@ -14,7 +14,6 @@ export class PesquisarClienteComponent implements OnInit {
 
   private dtOptions: any;
   private iconIncluir: string = "fa-plus";
-  private targetIncluir: string = "/clientes/cadastro";
   private listaClientes: Cliente[];
   private completeFetch: boolean = false;
 
@@ -31,6 +30,11 @@ export class PesquisarClienteComponent implements OnInit {
       this.completeFetch = true;
     });
     this.dtOptions = this.global.dataTablesConfig;
+  }
+
+  incluir() {
+    this.clienteService.setCliente(new Cliente());
+    this.router.navigate(["/clientes/cadastro"]);
   }
 
   editar(cliente: Cliente) {

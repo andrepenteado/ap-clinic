@@ -17,7 +17,11 @@ public class ApClinicSecurity extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http.authorizeRequests()
             .antMatchers("/login**").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated()
+        .and()
+            .cors()
+        .and()
+            .csrf().disable();
         // @formatter:on
     }
 
