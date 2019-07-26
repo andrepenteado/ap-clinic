@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Cliente } from "../../../_entities/cliente";
 import { BsLocaleService } from "ngx-bootstrap";
 import { ClienteService } from "../../../_services/cliente/cliente.service";
-import Swal from 'sweetalert2';
+import { GlobalService } from "../../../_config/global.service";
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -19,7 +19,8 @@ export class CadastroClienteComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private bsLocale: BsLocaleService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private global: GlobalService
   ) { }
 
   ngOnInit() {
@@ -50,9 +51,9 @@ export class CadastroClienteComponent implements OnInit {
       this.clienteService.gravar(this.cliente).subscribe(clienteAtualizado => {
         this.cliente = clienteAtualizado;
         this.formCliente.get("id").setValue(this.cliente.id);
-        Swal.fire("Gravar Cliente", `Cliente ${this.cliente.nome} gravado com sucesso!`, 'success');
+        this.global.mensagemSucesso(`Cliente ${this.cliente.nome} gravado com sucesso!`);
       }, errorResult => {
-        Swal.fire("Gravar Cliente", `Erro ao gravar cliente ${this.cliente.nome}!<br>${errorResult.error.message}`, 'error');
+        this.global.mensagemErro(`Erro ao gravar cliente ${this.cliente.nome}!<br>${errorResult.error.message}`,);
       });
     }
   }

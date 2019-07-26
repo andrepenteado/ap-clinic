@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import Swal, { SweetAlertResult } from "sweetalert2";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
+
+  constructor(
+    private router: Router
+  ) { }
 
   readonly dataTablesConfig: any = {
     lengthMenu: [ [10, -1], ["Sim", "Não"] ],
@@ -63,5 +69,66 @@ export class GlobalService {
     ]
   };
 
-  constructor() { }
+  mensagemInformacao(mensagem: string) {
+    Swal.fire({
+      type: "info",
+      title: "Informação",
+      text: mensagem,
+      showCloseButton: true
+    });
+  }
+
+  mensagemErro(mensagem: string) {
+    Swal.fire({
+      type: "error",
+      title: "Erro!",
+      text: mensagem,
+      showCloseButton: true
+    });
+  }
+
+  mensagemSucesso(mensagem: string) {
+    Swal.fire({
+      type: "success",
+      title: "Sucesso",
+      text: mensagem,
+      showCloseButton: true
+    });
+  }
+
+  mensagemAtencao(mensagem: string) {
+    Swal.fire({
+      type: "warning",
+      title: "Atenção!",
+      text: mensagem,
+      showCloseButton: true
+    });
+  }
+
+  confirmar(mensagem: string): Promise<SweetAlertResult> {
+    return Swal.fire({
+      title: "Confirmar?",
+      text: mensagem,
+      type: "question",
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: "<span class='fas fa-save'> Sim</span>",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true
+    });
+  }
+
+  confirmarExclusao(mensagem: string): Promise<SweetAlertResult> {
+    return Swal.fire({
+      title: "Atenção!",
+      text: mensagem,
+      type: "question",
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: "<span class='fas fa-trash-alt'> Excluir</span>",
+      confirmButtonColor: "#c9302c",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true
+    });
+  }
 }

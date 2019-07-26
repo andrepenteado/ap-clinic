@@ -78,10 +78,9 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         log.info("Excluir cliente #" + id);
-        return clienteRepository.findById(id)
-            .map(clienteEntity -> {
-                clienteRepository.deleteById(id);
-                return ResponseEntity.ok().build();
-            }).orElse(ResponseEntity.notFound().build());
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente de ID " + id + " não encontrado"));
+        clienteRepository.delete(cliente);
+        return ResponseEntity.ok().build();
     }
 }
