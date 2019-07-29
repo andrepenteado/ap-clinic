@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,7 @@ public class ClienteController {
     @PostMapping
     public Cliente incluir(@Valid @RequestBody Cliente cliente, BindingResult result) {
         log.info("Incluir cliente " + cliente.getNome());
+        cliente.setDataCadastro(LocalDateTime.now());
         // Checar validações
         if (result.hasErrors())
             throw new ResponseStatusException(
@@ -49,7 +51,7 @@ public class ClienteController {
                     .collect(Collectors.joining(". "))
             );
         // Checar CPF
-        if (clienteRepository.findByCpf(cliente.getCpf()).filter(c -> c.getCpf().equals(cliente.getCpf())).isPresent())
+        if (clienteRepository.findByCpf(cliente.getCpf()).isPresent())
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Cliente com CPF " + cliente.getCpf() + " existente.");
         return clienteRepository.save(cliente);
     }
@@ -57,6 +59,7 @@ public class ClienteController {
     @PutMapping
     public Cliente editar(@Valid @RequestBody Cliente cliente, BindingResult result) {
         log.info("Editar cliente " + cliente.getNome());
+        cliente.setDataAtualizacao(LocalDateTime.now());
         // Checar se existe
         Cliente clienteManaged = clienteRepository.findById(cliente.getId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente de ID " + cliente.getId() + " não encontrado"));
@@ -69,7 +72,7 @@ public class ClienteController {
                     .collect(Collectors.joining(". "))
             );
         // Checar CPF
-        if (clienteRepository.findByCpf(cliente.getCpf()).filter(c -> c.getCpf().equals(cliente.getCpf()) && c.getId() != cliente.getId()).isPresent())
+        if (clienteRepository.findByCpf(cliente.getCpf()).filter(c -> c.getId() != cliente.getId()).isPresent())
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Cliente com CPF " + cliente.getCpf() + " existente.");
         BeanUtils.copyProperties(cliente, clienteManaged);
         return clienteRepository.save(clienteManaged);

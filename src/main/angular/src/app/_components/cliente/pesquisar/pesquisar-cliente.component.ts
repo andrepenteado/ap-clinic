@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GlobalService } from "../../../_config/global.service";
 import { Cliente } from "../../../_entities/cliente";
 import { ClienteService } from "../../../_services/cliente/cliente.service";
 import { Router } from "@angular/router";
+import { DataTableDirective } from "angular-datatables";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'app-pesquisar-cliente',
   templateUrl: './pesquisar-cliente.component.html',
   styleUrls: ['./pesquisar-cliente.component.css']
 })
-export class PesquisarClienteComponent implements OnInit {
+export class PesquisarClienteComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild(DataTableDirective, {static: false})
+  private dtElement: DataTableDirective;
 
   private dtOptions: any;
+
+  private dtTrigger: Subject<any> = new Subject();
+
   private iconIncluir: string = "fa-plus";
+
   private listaClientes: Cliente[];
-  private completeFetch: boolean = false;
 
   constructor(
     private global: GlobalService,
@@ -23,14 +31,26 @@ export class PesquisarClienteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.pesquisar();
     this.dtOptions = this.global.dataTablesConfig;
+  }
+
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+    this.pesquisar();
+  }
+
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
   }
 
   pesquisar() {
     this.clienteService.pesquisar().subscribe((listaClientes: Cliente[]) => {
       this.listaClientes = listaClientes;
-      this.completeFetch = true;
+    });
+    // Reload no datatables
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
     });
   }
 

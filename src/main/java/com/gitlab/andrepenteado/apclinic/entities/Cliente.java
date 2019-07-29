@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -21,6 +22,14 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime dataCadastro;
+
+    @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime dataAtualizacao;
 
     @Column
     @NotBlank

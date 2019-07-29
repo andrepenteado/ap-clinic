@@ -5,7 +5,7 @@
       <div class="card-body border border-primary rounded shadow-lg">
         <h3 class="card-title">Cadastro de Clientes</h3>
         <small class="text-muted">
-          Desde: {{ cliente.dataCadastro | date: 'dd/MM/yyyy - HH:mm' }} - Última atualização: {{ cliente.dataUltimaAtualizacao | date: 'dd/MM/yyyy - HH:mm' }}
+          Desde: {{ cliente.dataCadastro | date: 'dd/MM/yyyy - HH:mm' }} - Última atualização: {{ cliente.dataAtualizacao | date: 'dd/MM/yyyy - HH:mm' }}
         </small>
         <hr>
         <div class="row">
@@ -22,21 +22,25 @@
           <div class="form-group col-12 col-md-6">
             <label for="txt_cpf" class="control-label">* CPF</label>
             <input type="text" name="txt_cpf" id="txt_cpf" formControlName="cpf" class="form-control"
-                   placeholder="Digite o CPF" [ngClass]="{ 'is-invalid': submitted && form.cpf.invalid }" mask="000.000.000-00"/>
+                   mask="000.000.000-00" [dropSpecialCharacters]="false"
+                   placeholder="Digite o CPF" [ngClass]="{ 'is-invalid': submitted && form.cpf.invalid }"/>
             <small *ngIf="submitted && form.cpf.invalid" class="text-danger">
               <div *ngIf="form.cpf.errors.required">CPF é um campo obrigatório</div>
+              <div *ngIf="form.cpf.errors.cpfvalidator">CPF inválido</div>
             </small>
           </div>
           <div class="form-group col-12 col-md-6">
             <label for="txt_data_nascimento" class="control-label">Data de Nascimento</label>
             <div class="input-group">
-              <input type="text" class="form-control" bsDatepicker name="txt_data_nascimento" id="txt_data_nascimento" #dataNascimento="bsDatepicker" value="{{ cliente.dataNascimento | date: 'dd/MM/yyyy' }}"
-                     [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="dataNascimento" [ngClass]="{ 'is-invalid': submitted && form.dataNascimento.invalid }" placeholder="99/99/9999">
+              <input type="text" class="form-control" bsDatepicker name="txt_data_nascimento" id="txt_data_nascimento" #dataNascimento="bsDatepicker"
+                     value="{{ cliente.dataNascimento | date: 'dd/MM/yyyy' }}" formControlName="dataNascimento"
+                     [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', isAnimated: true }"
+                     [ngClass]="{ 'is-invalid': submitted && form.dataNascimento.invalid }" placeholder="99/99/9999">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary fas fa-calendar" (click)="dataNascimento.toggle()" type="button"></button>
               </div>
             </div>
-            <small *ngIf="submitted && form.cpf.invalid" class="text-danger">
+            <small *ngIf="submitted && form.dataNascimento.invalid" class="text-danger">
               <div *ngIf="form.dataNascimento.errors.required">Data de nascimento é um campo obrigatório</div>
               <div *ngIf="!form.dataNascimento.errors.required">Campo com data inválida</div>
             </small>
@@ -46,12 +50,14 @@
           <div class="form-group col-12 col-md-6">
             <label for="txt_telefone" class="control-label">Telefone</label>
             <input type="text" name="txt_telefone" id="txt_telefone" formControlName="telefone"
+                   mask="(00) 0000-0000" [dropSpecialCharacters]="false"
                    class="form-control" placeholder="Telefone residencial"/>
           </div>
           <div class="form-group col-12 col-md-6">
             <label for="txt_celular" class="control-label">Celular</label>
             <div class="input-group">
               <input type="text" name="txt_celular" id="txt_celular" formControlName="celular"
+                     mask="(00) 0-0000-0000" [dropSpecialCharacters]="false"
                      class="form-control" placeholder="Telefone celular"/>
               <span class="input-group-append">
                 <span class="fab fa-whatsapp fa-lg input-group-text">
@@ -72,6 +78,9 @@
           </div>
           <div class="form-group col-12 col-md-6">
             <label for="txt_profissao" class="control-label">Profissão</label>
+            <!-- example for pt-BR money -->
+            <!--<input currencyMask name="txt_profissao" id="txt_profissao" formControlName="profissao" class="form-control"
+                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" [ngClass]="{ 'is-invalid': form.profissao.invalid }"/>-->
             <input type="text" name="txt_profissao" id="txt_profissao" formControlName="profissao" class="form-control"
                    placeholder="Profissão" [ngClass]="{ 'is-invalid': form.profissao.invalid }"/>
           </div>

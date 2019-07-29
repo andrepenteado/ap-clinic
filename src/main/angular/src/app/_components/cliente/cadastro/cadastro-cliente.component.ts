@@ -4,6 +4,7 @@ import { Cliente } from "../../../_entities/cliente";
 import { BsLocaleService } from "ngx-bootstrap";
 import { ClienteService } from "../../../_services/cliente/cliente.service";
 import { GlobalService } from "../../../_config/global.service";
+import { ValidateBrService } from "angular-validate-br";
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -19,6 +20,7 @@ export class CadastroClienteComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private bsLocale: BsLocaleService,
+    private validarBR: ValidateBrService,
     private clienteService: ClienteService,
     private global: GlobalService
   ) { }
@@ -29,8 +31,10 @@ export class CadastroClienteComponent implements OnInit {
     this.bsLocale.use("pt-br");
     this.formCliente = this.fb.group({
       id: [ this.cliente.id ],
+      dataCadastro: [ this.cliente.dataCadastro ],
+      dataAtualizacao: [ this.cliente.dataAtualizacao ],
       nome: [ this.cliente.nome, Validators.required ],
-      cpf: [ this.cliente.cpf, Validators.required ],
+      cpf: [ this.cliente.cpf, [ Validators.required, this.validarBR.cpf ] ],
       dataNascimento: [ this.cliente.dataNascimento, Validators.required ],
       profissao: [ this.cliente.profissao ],
       email: [ this.cliente.email, Validators.email ],
@@ -51,9 +55,11 @@ export class CadastroClienteComponent implements OnInit {
       this.clienteService.gravar(this.cliente).subscribe(clienteAtualizado => {
         this.cliente = clienteAtualizado;
         this.formCliente.get("id").setValue(this.cliente.id);
+        this.formCliente.get("dataCadastro").setValue(this.cliente.dataCadastro);
+        this.formCliente.get("dataAtualizacao").setValue(this.cliente.dataAtualizacao);
         this.global.mensagemSucesso(`Cliente ${this.cliente.nome} gravado com sucesso!`);
       }, errorResult => {
-        this.global.mensagemErro(`Erro ao gravar cliente ${this.cliente.nome}!<br>${errorResult.error.message}`,);
+        this.global.mensagemErro(`Erro ao gravar cliente ${this.cliente.nome}! ${errorResult.error.message}`,);
       });
     }
   }

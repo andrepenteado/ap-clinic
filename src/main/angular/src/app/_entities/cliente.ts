@@ -1,7 +1,7 @@
 export class Cliente {
   id: number;
   dataCadastro: Date;
-  dataUltimaAtualizacao: Date;
+  dataAtualizacao: Date;
   nome: string;
   cpf: string;
   dataNascimento: Date;
