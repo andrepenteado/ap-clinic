@@ -7,9 +7,7 @@ import { Router } from "@angular/router";
 })
 export class GlobalService {
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor() { }
 
   readonly dataTablesConfig: any = {
     lengthMenu: [ [10, -1], ["Sim", "Não"] ],
@@ -131,4 +129,6 @@ export class GlobalService {
       reverseButtons: true
     });
   }
+
+  public breadcrumb;
 }

@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+import { ModalModule } from "ngx-bootstrap/modal";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { DataTablesModule } from "angular-datatables";
 import { NgxCurrencyModule } from "ngx-currency";
@@ -22,6 +23,8 @@ import { MenuComponent } from './_views/menu.component';
 import { CadastroClienteComponent } from './_components/cliente/cadastro/cadastro-cliente.component';
 import { PesquisarClienteComponent } from './_components/cliente/pesquisar/pesquisar-cliente.component';
 import { FloatingButtonComponent } from './_views/floating-button.component';
+import { BreadcrumbComponent } from './_views/breadcrumb.component';
+import { HomeComponent } from './_views/home.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { FloatingButtonComponent } from './_views/floating-button.component';
     MenuComponent,
     FloatingButtonComponent,
     CadastroClienteComponent,
-    PesquisarClienteComponent
+    PesquisarClienteComponent,
+    BreadcrumbComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import { FloatingButtonComponent } from './_views/floating-button.component';
     NgxMaskModule.forRoot(),
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    ModalModule
   ],
   providers: [GlobalService],
   bootstrap: [AppComponent]

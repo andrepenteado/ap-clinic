@@ -13,7 +13,7 @@ import { Subject } from "rxjs";
 })
 export class PesquisarClienteComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(DataTableDirective, {static: false})
+  @ViewChild(DataTableDirective, { static: false })
   private dtElement: DataTableDirective;
 
   private dtOptions: any;
@@ -46,11 +46,13 @@ export class PesquisarClienteComponent implements OnInit, OnDestroy, AfterViewIn
   pesquisar() {
     this.clienteService.pesquisar().subscribe((listaClientes: Cliente[]) => {
       this.listaClientes = listaClientes;
-    });
-    // Reload no datatables
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next();
+    }, errorResult => {
+      this.global.mensagemErro(`Erro pesquisar listagem de clientes. ${errorResult.error.message}`);
+    }, ()  => {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
     });
   }
 
