@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:30002/ap-clinic"
+  apiUrl: "http://localhost:30002/ap-clinic",
+  ssoUrl: "http://localhost:30000/ap-sso"
 };
 
 /*

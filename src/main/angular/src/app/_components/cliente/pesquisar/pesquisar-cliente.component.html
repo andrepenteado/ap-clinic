@@ -7,9 +7,6 @@
     <tr>
       <th>#</th>
       <th>Nome</th>
-      <th>CPF</th>
-      <th>Data de Nascimento</th>
-      <th>Profissão</th>
       <th>E-mail</th>
       <th>Telefone</th>
       <th>Celular</th>
@@ -20,9 +17,6 @@
     <tr *ngFor="let cliente of listaClientes">
       <td>{{ cliente.id }}</td>
       <td>{{ cliente.nome }}</td>
-      <td>{{ cliente.cpf }}</td>
-      <td>{{ cliente.dataNascimento | date: 'dd/MM/yyyy' }}</td>
-      <td>{{ cliente.profissao }}</td>
       <td>{{ cliente.email }}</td>
       <td>{{ cliente.telefone }}</td>
       <td>{{ cliente.celular }}</td>

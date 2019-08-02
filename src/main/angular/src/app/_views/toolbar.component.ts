@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserLogin } from "../_entities/user-login";
+import { UserService } from "../_services/user/user.service";
 
 @Component({
   selector: 'app-toolbar',
@@ -16,9 +18,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  private userLogin: UserLogin;
+
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    this.userService.usuarioLogado().subscribe(userLogin => {
+      console.log(userLogin);
+      this.userLogin = userLogin;
+    });
+    sessionStorage.setItem("userLogin", this.userLogin.username);
   }
 
 }
