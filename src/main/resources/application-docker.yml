@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://apclinic-dbserver:5432/apclinic-dbname?autoReconnect=true
+    url: jdbc:postgresql://apclinic-dbserver:50002/apclinic-dbname?autoReconnect=true
 security:
   oauth2:
     client:
       accessTokenUri: http://apsso-webapp:8080/ap-sso/oauth/token
-      clientId: com.gitlab.andrepenteado.apcontrole
-      clientSecret: apcontrole-secret
-      userAuthorizationUri: http://host:30000/ap-sso/oauth/authorize
+      clientId: com.gitlab.andrepenteado.apclinic
+      clientSecret: apclinic-secret
+      userAuthorizationUri: http://localhost:30000/ap-sso/oauth/authorize
     resource:
       userInfoUri: http://apsso-webapp:8080/ap-sso/user

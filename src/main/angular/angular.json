@@ -77,7 +77,7 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "ap-clinic:build:production",
+              "browserTarget": "ap-clinic:build:production"
             }
           }
         },

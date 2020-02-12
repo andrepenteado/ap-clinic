@@ -24,11 +24,6 @@ public class AngularResourceHandler implements WebMvcConfigurer {
             protected Resource getResource(String resourcePath, Resource location) throws IOException {
                 Resource requestedResource = location.createRelative(resourcePath);
                 return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/static/index.html");
-                /*Resource resource = resourceLoader.getResource("classpath:/static/" + resourcePath);
-                if (resource.exists()) {
-                    return resource;
-                }
-                return location.exists() && location.isReadable() ? location : null;*/
             }
         });
         // @formatter:on
