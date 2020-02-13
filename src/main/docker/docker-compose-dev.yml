@@ -12,7 +12,7 @@ services:
     ports:
       - "50002:5432"
   apclinic-webapp:
-    image: registry.gitlab.com/andrepenteado/ap-clinic
+    image: tomcat:9-jre11
     container_name: apclinic-webapp-container
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
@@ -25,6 +25,6 @@ services:
       - "jpda"
       - "run"
     volumes:
-      - ../../../target/ap-controle.war:/usr/local/tomcat/webapps/ap-controle.war
+      - ../../../target/ap-clinic.war:/usr/local/tomcat/webapps/ap-clinic.war
 volumes:
   apclinic-pgdata:

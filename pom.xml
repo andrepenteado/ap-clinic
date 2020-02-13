@@ -5,6 +5,14 @@
 
    <modelVersion>4.0.0</modelVersion>
 
+   <groupId>com.gitlab.andrepenteado</groupId>
+   <artifactId>ap-clinic</artifactId>
+   <version>1.0.0</version>
+   <packaging>war</packaging>
+
+   <name>ap-clinic</name>
+   <description>Sistema de agendamento e controle de atendimento clínico</description>
+
    <parent>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
@@ -12,18 +20,10 @@
       <relativePath/> <!-- lookup parent from repository -->
    </parent>
 
-   <groupId>com.gitlab.andrepenteado</groupId>
-   <artifactId>ap-clinic</artifactId>
-   <version>1.0.0</version>
-   <name>ap-clinic</name>
-   <description>Sistema de agendamento e controle de atendimento clínico</description>
-
    <properties>
       <java.version>11</java.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <maven.compiler.target>11</maven.compiler.target>
-      <maven.compiler.source>11</maven.compiler.source>
    </properties>
 
    <dependencies>

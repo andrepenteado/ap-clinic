@@ -13,7 +13,7 @@ run:
 	docker-compose -f src/main/docker/docker-compose.yml up
 
 run-dev:
-	./mvnw clean package
+	./mvnw clean package -DskipTests
 	docker-compose -f src/main/docker/docker-compose-dev.yml up
 
 run-db:
