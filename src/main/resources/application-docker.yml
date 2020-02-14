@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://apclinic-dbserver:50002/apclinic-dbname?autoReconnect=true
+    url: jdbc:postgresql://apclinic-dbserver:5432/apclinic-dbname?autoReconnect=true
 security:
   oauth2:
     client:
