@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.apclinic.entities;
+package com.github.andrepenteado.apclinic.entities;
 
 import lombok.Data;
 

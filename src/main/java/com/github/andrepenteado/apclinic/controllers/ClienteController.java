@@ -1,7 +1,5 @@
-package com.gitlab.andrepenteado.apclinic.controllers;
+package com.github.andrepenteado.apclinic.controllers;
 
-import com.gitlab.andrepenteado.apclinic.entities.Cliente;
-import com.gitlab.andrepenteado.apclinic.repositories.ClienteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.github.andrepenteado.apclinic.entities.Cliente;
+import com.github.andrepenteado.apclinic.repositories.ClienteRepository;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;

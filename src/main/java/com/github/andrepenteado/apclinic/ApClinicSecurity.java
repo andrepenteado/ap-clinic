@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.apclinic;
+package com.github.andrepenteado.apclinic;
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;

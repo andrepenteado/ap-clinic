@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   apclinic-dbserver:
-    image: postgres:11-alpine
+    image: postgres:14-alpine
     container_name: apclinic-dbserver-container
     environment:
       POSTGRES_USER: apclinic-dbuser
@@ -12,14 +12,14 @@ services:
     ports:
       - "50002:5432"
   apclinic-webapp:
-    image: tomcat:9-jre11
+    image: tomcat:9-jre17
     container_name: apclinic-webapp-container
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
       - "30002:8080"
-      - "28001:8001"
-      - "21099:1099"
+      - "28002:8001"
+      - "21097:1099"
     entrypoint:
       - "catalina.sh"
       - "jpda"

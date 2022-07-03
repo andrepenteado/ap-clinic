@@ -1,4 +1,4 @@
-package com.gitlab.andrepenteado.apclinic;
+package com.github.andrepenteado.apclinic;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
